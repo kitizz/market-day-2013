@@ -41,6 +41,10 @@ import android.widget.ImageView;
 public class BlobView extends Activity implements CvCameraViewListener {
 	
 	// USB Stuff
+	
+	private static final byte CMD_HORIZONTAL = 10;
+	private static final byte CMD_VERTICAL = 12;
+	
 	private static final byte TOGGLE_LED_COMMAND = 15;
 
 	private UsbManager mUsbManager;
@@ -242,6 +246,14 @@ public class BlobView extends Activity implements CvCameraViewListener {
         }
         cx /= facesArray.length;
         cy /= facesArray.length;
+        
+        byte hx = (byte)128, vx = (byte)128;
+        if (facesArray.length != 0) {
+	        hx = (byte) (255*cx/mRgba.width());
+	        vx = (byte) (255*cy/mRgba.height());
+        }
+        sendCommand(CMD_HORIZONTAL, hx);
+        
         Point center = new Point(cx, cy);
         
         Core.circle(mRgba, center, 5, CENTER_COLOR);
@@ -362,10 +374,11 @@ public class BlobView extends Activity implements CvCameraViewListener {
 		setStatusDisconnected();
 	}
 
-	private void sendCommand(byte command) {
+	private void sendCommand(byte command, byte arg) {
 		if (mOutputStream != null) {
 			try {
-				mOutputStream.write(command);
+				byte[] msg = {command, arg};
+				mOutputStream.write(msg);
 			} catch (IOException e) {
 				// Do nothing
 			}

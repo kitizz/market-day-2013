@@ -27,7 +27,11 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.buildCommand</key>
+<<<<<<< HEAD
 					<value>${NDKROOT}/ndk-build</value>
+=======
+					<value>${NDKROOT}/ndk-build.cmd</value>
+>>>>>>> Rawr
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.cleanBuildTarget</key>

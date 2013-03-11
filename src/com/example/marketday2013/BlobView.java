@@ -28,8 +28,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.hardware.usb.UsbAccessory;
-import android.hardware.usb.UsbManager;
+import com.android.future.usb.UsbAccessory;
+import com.android.future.usb.UsbManager;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
 import android.util.Log;
@@ -154,7 +154,8 @@ public class BlobView extends Activity implements CvCameraViewListener {
         super.onCreate(savedInstanceState);
         
         // USB Shield
-        mUsbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
+//        mUsbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
+        mUsbManager = UsbManager.getInstance(this);
 		setContentView(R.layout.main);
 		setupStatusLed();
 		
@@ -338,8 +339,9 @@ public class BlobView extends Activity implements CvCameraViewListener {
 		Intent intent = getIntent();
 		String action = intent.getAction();
 		if (UsbManager.ACTION_USB_ACCESSORY_ATTACHED.equals(action)) {
-				mAccessory = (UsbAccessory) intent.getParcelableExtra(UsbManager.EXTRA_ACCESSORY);
-				openAccessory();
+//				mAccessory = (UsbAccessory) intent.getParcelableExtra(UsbManager.EXTRA_ACCESSORY);
+			UsbAccessory accessory = UsbManager.getAccessory(intent);
+			openAccessory();
 		}
 	}
 

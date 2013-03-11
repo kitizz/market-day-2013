@@ -38,6 +38,7 @@ local.properties
 
 # CDT-specific
 #.cproject
+*.so
 
 # PDT-specific
 .buildpath

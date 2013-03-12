@@ -25,7 +25,6 @@
 							</tool>
 							<tool id="org.eclipse.cdt.build.core.settings.holder.1768528232" name="GNU C++" superClass="org.eclipse.cdt.build.core.settings.holder">
 								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.1233882374" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${NDKROOT}/platforms/android-9/arch-arm/usr/include&#10;${NDKROOT}/sources/cxx-stl/gnu-libstdc++/4.6/include&#10;${NDKROOT}/sources/cxx-stl/gnu-libstdc++/4.6/libs/armeabi-v7a/include&#10;${ProjDirPath}/../../sdk/native/jni/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${NDKROOT}/sources/cxx-stl/gnu-libstdc++/4.6/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${NDKROOT}/sources/cxx-stl/gnu-libstdc++/4.6/libs/armeabi-v7a/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${OPENCVROOT}/sdk/native/jni/include&quot;"/>

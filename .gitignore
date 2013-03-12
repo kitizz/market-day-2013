@@ -5,6 +5,7 @@
 *.pydevproject
 .metadata
 bin/
+gen/
 tmp/
 *.tmp
 *.bak
@@ -12,6 +13,7 @@ tmp/
 *~.nib
 local.properties
 .loadpath
+*.so
 
 # External tool builders
 .externalToolBuilders/

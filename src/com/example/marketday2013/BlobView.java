@@ -43,9 +43,9 @@ public class BlobView extends Activity implements CvCameraViewListener {
 	// USB Stuff
 	
 	private static final byte CMD_HORIZONTAL = 10;
-	private static final byte CMD_VERTICAL = 12;
+//	private static final byte CMD_VERTICAL = 12;
 	
-	private static final byte TOGGLE_LED_COMMAND = 15;
+//	private static final byte TOGGLE_LED_COMMAND = 15;
 
 	private UsbManager mUsbManager;
 
@@ -236,27 +236,45 @@ public class BlobView extends Activity implements CvCameraViewListener {
             Log.e(TAG, "Detection method is not selected!");
         }
         
+        // Up to here, is the exiting sample code. Now I'm going to make use
+        // of the face bounding boxes.
         Rect[] facesArray = faces.toArray();
-        double cx=0, cy=0;
+        // We want to find the center point of all the faces that the robot can see.
+        // This will allow us to try to keep as many faces in the piture as possible.
+        double cx=0, cy=0; // The center x and y.
         for (int i = 0; i < facesArray.length; i++) {
+        	// Use the top-left and bottom-right points of each face box.
         	Point tl = facesArray[i].tl();
         	Point br = facesArray[i].br();
+        	// Find the center of each face box and sum up the value.
         	cx += (tl.x + br.x)/2;
         	cy += (tl.y + br.y)/2;
+        	// Draw the rectangle to show the face detection on the phone screen.
             Core.rectangle(mRgba, tl, br, FACE_RECT_COLOR, 3);
         }
+        // We divide the sums by the number of faces to give us the average
+        // values. In other words, the center point.
         cx /= facesArray.length;
         cy /= facesArray.length;
         
-        byte hx = (byte)128, vx = (byte)128;
+        // Using the "byte" type strictly keeps the variable at 8bit long.
+        // This is because the Arduino is expecting to receive the message in
+        // byte form.
+        // A byte has a value range of 0-255. And so 128 is the center.
+        byte hx = (byte)128; // This is the default value.
         if (facesArray.length != 0) {
+        	// Change from the default value if there are faces.
+        	// mRga.width() is width of the image. So cx/mRga.width() gives a
+        	// fraction: 0.0 -> 1.0, 0.5 being the center.
+        	// Then multiply this value by 255 to return the value useable by
+        	// the Arduino.
 	        hx = (byte) (255*cx/mRgba.width());
-	        vx = (byte) (255*cy/mRgba.height());
         }
+        // Send the command and value to the Arduino.
         sendCommand(CMD_HORIZONTAL, hx);
         
+        // Let's draw the calculated center point for fun.
         Point center = new Point(cx, cy);
-        
         Core.circle(mRgba, center, 5, CENTER_COLOR);
 
         return mRgba;
